@@ -3,13 +3,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import sockets.conexion.Conexion;
+import java.io.IOException;
+import java.io.BufferedReader;
 
 //
 // Presentador
 // (CC) jjramos, 2012
 //
-public class Presentador {YodafyServidorIterativo
-
+public class Presentador extends Conexion{
+	public Presentador()throws IOException{super("servidor");}
 	public static void main(String[] args) {
 
 		// Puerto de escucha
@@ -20,6 +23,18 @@ public class Presentador {YodafyServidorIterativo
 		int bytesLeidos=0;
 
 		try {
+			System.out.println("Waiting...");//espera al Concursante
+
+			cs=ss.accept(); //comienza el socket y espera conexxion con el cliente
+
+			System.out.println("Concursante listo");
+
+			salidaCliente = new DataOutputStream(cs.getOutputStream());
+
+			salidaCliente.writeUTF("Empezamos");
+
+			BufferedReader entrada = new BufferedReader(new InputStreamReader(cs.getInputStream()));
+			
 			// Abrimos el socket en modo pasivo, escuchando el en puerto indicado por "port"
 			//////////////////////////////////////////////////
 			// ...serverSocket=... (completar)
