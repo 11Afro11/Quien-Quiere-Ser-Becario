@@ -34,7 +34,7 @@ public class Presentador extends Conexion{
 			salidaCliente.writeUTF("Empezamos");
 
 			BufferedReader entrada = new BufferedReader(new InputStreamReader(cs.getInputStream()));
-			
+
 			// Abrimos el socket en modo pasivo, escuchando el en puerto indicado por "port"
 			//////////////////////////////////////////////////
 			// ...serverSocket=... (completar)
