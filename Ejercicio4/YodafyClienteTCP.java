@@ -11,11 +11,16 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+///////////////////////////////
+import java.net.DatagramSocket
+import java.net.DatagramPacket
+import java.newInetAddres
+
 public class YodafyClienteTCP {
 
 	public static void main(String[] args) {
 		
-		byte []buferEnvio;
+		byte []buferEnvio ;
 		byte []buferRecepcion=new byte[256];
 		int bytesLeidos=0;
 		
@@ -24,57 +29,37 @@ public class YodafyClienteTCP {
 		// Puerto en el que espera el servidor:
 		int port=8989;
 		
-		// Socket para la conexión TCP
-		Socket socketServicio=null;
-		
-		try {
-			// Creamos un socket que se conecte a "hist" y "port":
-			//////////////////////////////////////////////////////
-			// socketServicio= ... (Completar)
-			//////////////////////////////////////////////////////			
-			
-			InputStream inputStream = socketServicio.getInputStream();
-			OutputStream outputStream = socketServicio.getOutputStream();
-			
-			// Si queremos enviar una cadena de caracteres por un OutputStream, hay que pasarla primero
-			// a un array de bytes:
-			buferEnvio="Al monte del volcán debes ir sin demora".getBytes();
-			
-			// Enviamos el array por el outputStream;
-			//////////////////////////////////////////////////////
-			// ... .write ... (Completar)
-			//////////////////////////////////////////////////////
-			
-			// Aunque le indiquemos a TCP que queremos enviar varios arrays de bytes, sólo
-			// los enviará efectivamente cuando considere que tiene suficientes datos que enviar...
-			// Podemos usar "flush()" para obligar a TCP a que no espere para hacer el envío:
-			//////////////////////////////////////////////////////
-			// ... .flush(); (Completar)
-			//////////////////////////////////////////////////////
-			
-			// Leemos la respuesta del servidor. Para ello le pasamos un array de bytes, que intentará
-			// rellenar. El método "read(...)" devolverá el número de bytes leídos.
-			//////////////////////////////////////////////////////
-			// bytesLeidos ... .read... buferRecepcion ; (Completar)
-			//////////////////////////////////////////////////////
-			
-			// MOstremos la cadena de caracteres recibidos:
-			System.out.println("Recibido: ");
-			for(int i=0;i<bytesLeidos;i++){
-				System.out.print((char)buferRecepcion[i]);
-			}
-			
-			// Una vez terminado el servicio, cerramos el socket (automáticamente se cierran
-			// el inpuStream  y el outputStream)
-			//////////////////////////////////////////////////////
-			// ... close(); (Completar)
-			//////////////////////////////////////////////////////
-			
-			// Excepciones:
-		} catch (UnknownHostException e) {
-			System.err.println("Error: Nombre de host no encontrado.");
-		} catch (IOException e) {
-			System.err.println("Error de entrada/salida al abrir el socket.");
+		DatagramSocket socket = null;
+		DatagramPacket packquet = null;
+		DatagramPacket mod = null;
+		InetAddres direccion = null;
+
+		String frase_modificada;
+
+		try{
+			socket = new DatagramSocket();
+		}
+		catch(IOException e){
+			System.err.println("Error de entrada salida al abrir el socket");
+		}
+
+		try{
+			direccion = InetAddres.getByNane("localhost");
+		}
+		catch(UnknownHostException e){
+			System.err.println("Error al recuperar la dicerrcion");
+		}
+		buferEnvio = "Al monte del volcan deberas ir sin demora".getBytes();
+
+		try{
+			packquet = new DatagramPacket(buferEnvio,buferEnvio.length,direccion,port);
+			socket.send(packquet);
+
+			mod = new DatagramPacket(buferRecepcion,buferRecepcion.length);
+			socket.receive(mod);
+		}
+		catch(IOException e){
+			System.err.println("Error de entrada salida al abrir al socket");
 		}
 	}
 }

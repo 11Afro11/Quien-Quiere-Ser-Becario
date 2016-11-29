@@ -20,7 +20,6 @@ public class ProcesadorYodafy {
 	private InputStream inputStream;
 	// stream de escritura (por aquí se envía los datos al cliente)
 	private OutputStream outputStream;
-	
 	// Para que la respuesta sea siempre diferente, usamos un generador de números aleatorios.
 	private Random random;
 	
@@ -51,7 +50,7 @@ public class ProcesadorYodafy {
 			////////////////////////////////////////////////////////
 			// read ... datosRecibidos.. (Completar)
 			////////////////////////////////////////////////////////
-			
+			bytesRecibidos = inputStream.read(datosRecibidos);
 			// Yoda hace su magia:
 			// Creamos un String a partir de un array de bytes de tamaño "bytesRecibidos":
 			String peticion=new String(datosRecibidos,0,bytesRecibidos);
@@ -64,7 +63,7 @@ public class ProcesadorYodafy {
 			////////////////////////////////////////////////////////
 			// ... write ... datosEnviar... datosEnviar.length ... (Completar)
 			////////////////////////////////////////////////////////
-			
+			outputStream.write(datosEnviar,0,datosEnviar.length);
 			
 			
 		} catch (IOException e) {

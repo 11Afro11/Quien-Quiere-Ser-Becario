@@ -13,14 +13,13 @@ import java.util.Random;
 // Nota: si esta clase extendiera la clase Thread, y el procesamiento lo hiciera el método "run()",
 // ¡Podríamos realizar un procesado concurrente! 
 //
-public class ProcesadorYodafy {
+public class ProcesadorYodafy extends Thread{
 	// Referencia a un socket para enviar/recibir las peticiones/respuestas
 	private Socket socketServicio;
 	// stream de lectura (por aquí se recibe lo que envía el cliente)
 	private InputStream inputStream;
 	// stream de escritura (por aquí se envía los datos al cliente)
 	private OutputStream outputStream;
-	
 	// Para que la respuesta sea siempre diferente, usamos un generador de números aleatorios.
 	private Random random;
 	
@@ -30,7 +29,9 @@ public class ProcesadorYodafy {
 		random=new Random();
 	}
 	
-	
+	public void run(){
+		procesa();
+	}
 	// Aquí es donde se realiza el procesamiento realmente:
 	void procesa(){
 		
@@ -51,7 +52,7 @@ public class ProcesadorYodafy {
 			////////////////////////////////////////////////////////
 			// read ... datosRecibidos.. (Completar)
 			////////////////////////////////////////////////////////
-			
+			bytesRecibidos = inputStream.read(datosRecibidos);
 			// Yoda hace su magia:
 			// Creamos un String a partir de un array de bytes de tamaño "bytesRecibidos":
 			String peticion=new String(datosRecibidos,0,bytesRecibidos);
@@ -64,7 +65,7 @@ public class ProcesadorYodafy {
 			////////////////////////////////////////////////////////
 			// ... write ... datosEnviar... datosEnviar.length ... (Completar)
 			////////////////////////////////////////////////////////
-			
+			outputStream.write(datosEnviar,0,datosEnviar.length);
 			
 			
 		} catch (IOException e) {
