@@ -42,7 +42,7 @@ public class YodafyClienteTCP {
 
 
 
-			buferEnvio="Al monte del volcán debes ir sin demora";
+			buferEnvio="";
 
 			// Enviamos el array por el outputStream;
 			//////////////////////////////////////////////////////
@@ -68,9 +68,10 @@ public class YodafyClienteTCP {
 			buferRecepcion = lector.readLine();
 
 			// MOstremos la cadena de caracteres recibidos:
-			System.out.println("Recibido: " + buferRecepcion +"\n");
+			System.out.println(buferRecepcion +"\n");
 
 			while(parada){
+				buferEnvio = null;
 				InputStreamReader entrada = new InputStreamReader(System.in);
 	      //Lee del teclado, es decir lo del flujo estraada
 	      BufferedReader teclado = new BufferedReader(entrada);
@@ -95,7 +96,8 @@ public class YodafyClienteTCP {
 				buferRecepcion = lector.readLine();
 
 				// MOstremos la cadena de caracteres recibidos:
-				System.out.println("Recibido: " + buferRecepcion +"\n");
+				System.out.println(buferRecepcion +"\n");
+
 			}
 			// Si queremos enviar una cadena de caracteres por un OutputStream, hay que pasarla primero
 			// a un array de bytes:
